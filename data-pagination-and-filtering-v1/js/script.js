@@ -85,7 +85,6 @@ This function will search and match student
 function searchFunction(searchInput, names) {
    const studentList = document.querySelector('.student-list')
    const currentPage = document.querySelector('.active')
-   console.log(currentPage)
 
    const student = document.createElement('ul')
    student.className = 'student-list'
@@ -129,7 +128,7 @@ const search = document.querySelector('#search')
 /*
 This eventListener will receive the instruction of our search button
 */
-submit.addEventListener('click', (event) => {
+submit.addEventListener('keyup', (event) => {
    event.preventDefault();
    
    searchFunction(search, data)
@@ -140,6 +139,7 @@ This eventListener will refresh our page when we erase the search student
 search.addEventListener('keyup', (e) => {
    e.preventDefault();
 
+   searchFunction(search, data)
    refreshPage(search, data)
 });
 
