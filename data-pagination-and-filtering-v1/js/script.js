@@ -87,8 +87,7 @@ createSearchButton();
 This function will search and match student
 */
 function searchFunction(targetValue, names) {
-   const currentPage = document.querySelector('.active');
-   let currentArray = [];
+   const currentArray = [];
 
    for (let i = 0; i < names.length; i++) {
       let completeName = names[i].name.first.toLowerCase() + ' ' + names[i].name.last.toLowerCase();
