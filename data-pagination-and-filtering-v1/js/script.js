@@ -87,8 +87,9 @@ function searchFunction(targetValue, names) {
    let currentArray = [];
 
    for (let i = 0; i < names.length; i++) {
+      let completeName = names[i].name.first.toLowerCase() + ' ' + names[i].name.last.toLowerCase();
       
-      if (targetValue.length !== 0 && names[i].name.first.toLowerCase().includes(targetValue)) {
+      if (targetValue.length !== 0 && completeName.includes(targetValue)) {
          currentArray.push(names[i])
       };
 
