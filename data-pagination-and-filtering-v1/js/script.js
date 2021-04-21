@@ -57,7 +57,6 @@ function addPagination(list) {
          document.querySelector('.active').className = ''
          e.target.className = 'active'
          showPage(list, e.target.textContent)
-         console.log(list)
       };
    });
 };
