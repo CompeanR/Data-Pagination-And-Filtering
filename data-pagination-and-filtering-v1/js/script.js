@@ -57,6 +57,7 @@ function addPagination(list) {
          document.querySelector('.active').className = ''
          e.target.className = 'active'
          showPage(list, e.target.textContent)
+         console.log(list)
       };
    });
 };
@@ -82,33 +83,19 @@ createSearchButton();
 /*
 This function will search and match student
 */
-function searchFunction(searchInput, names) {
-   const studentList = document.querySelector('.student-list')
+function searchFunction(targetValue, names) {
    const currentPage = document.querySelector('.active')
-
-   const student = document.createElement('ul')
-   student.className = 'student-list'
-   const li = document.createElement('li')
+   let currentArray = [];
 
    for (let i = 0; i < names.length; i++) {
       
-      if (searchInput.value.length !== 0 && names[i].name.first.toLowerCase() + ' ' + names[i].name.last.toLowerCase() == searchInput.value.toLowerCase()) {
-         
-         studentList.innerHTML = ''
-         li.innerHTML = `
-         <li class="student-item cf" id="${names[i].name.first} ${names[i].name.last}">
-            <div class="student-details">
-               <img class="avatar" src=${names[i].picture.large} alt="Profile Picture">
-               <h3>${names[i].name.first} ${names[i].name.last}</h3>
-               <span class="email">${names[i].email}</span>
-            </div>
-            <div class="joined-details">
-               <span class="date">Joined ${names[i].registered.date}</span>
-            </div>
-         `
-         studentList.appendChild(li)
-      }; 
+      if (targetValue.length !== 0 && names[i].name.first.toLowerCase().includes(targetValue)) {
+         currentArray.push(names[i])
+      };
+
    };
+
+   showPage(currentArray, 1)
 };
 /*
 This function will refresh our page after a student search
@@ -119,6 +106,7 @@ function refreshPage(searchInput, data) {
    if (searchInput.value.length == 0) {
       showPage(data, currentPage.textContent)
    };
+   
 };
 /*
 This will be variables that we will use in our eventListeners
@@ -130,6 +118,7 @@ This eventListener will receive the instruction of our search button
 */
 submit.addEventListener('keyup', (event) => {
    event.preventDefault();
+   const character = e.target.value
    
    searchFunction(search, data)
 });
@@ -138,8 +127,9 @@ This eventListener will refresh our page when we erase the search student
 */
 search.addEventListener('keyup', (e) => {
    e.preventDefault();
+   const character = e.target.value
 
-   searchFunction(search, data)
+   searchFunction(character, data)
    refreshPage(search, data)
 });
 
