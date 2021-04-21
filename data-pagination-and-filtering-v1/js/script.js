@@ -1,14 +1,18 @@
-
+/*
+This function will create and insert/append the elements needed to display a "page" of nine students
+*/
 function showPage(list, page) {
    const itemsPerPage = 9;
    const firstIndex = (page * itemsPerPage) - itemsPerPage;
    const lastIndex = page * itemsPerPage;
 
    const studentList = document.querySelector('.student-list');
+   studentList.innerHTML = ''
 
    function createLiElement(data) {
       const li = document.createElement('li')
       li.className = 'student-item cf'
+      li.id = `${data.name.first} ${data.name.last}"`
       li.innerHTML = `
           <div class="student-details">
             <img class="avatar" src=${data.picture.large} alt="Profile Picture">
@@ -30,9 +34,7 @@ function showPage(list, page) {
 };
 
 showPage(data, 1);
-
 /*
-Create the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
 */
 function addPagination(list) {
@@ -46,7 +48,6 @@ function addPagination(list) {
       li.innerHTML = `
       <button type="button">${i}</button>
       `
-      
       linkList.insertAdjacentElement("beforeend", li);
       document.querySelector('button').className = 'active'  
    };
@@ -61,6 +62,90 @@ function addPagination(list) {
 };
 
 addPagination(data);
+/*
+This function will create the search button in the html file
+*/
+function createSearchButton(){
+   const header = document.querySelector('.header')
+   header.innerHTML = `
+   <h2>Students</h2>
+   <label for="search" class="student-search">
+      <span>Search by name</span>
+      <input id="search" placeholder="Search by name...">
+      <button type="button" id="submit"><img src="img/icn-search.svg" alt="Search icon"></button>
+   </label>
+   `
+   return header
+};
+
+createSearchButton();
+/*
+This function will search and match student
+*/
+function searchFunction(searchInput, names) {
+   const studentList = document.querySelector('.student-list')
+   const currentPage = document.querySelector('.active')
+   console.log(currentPage)
+
+   const student = document.createElement('ul')
+   student.className = 'student-list'
+   const li = document.createElement('li')
+
+   for (let i = 0; i < names.length; i++) {
+      
+      if (searchInput.value.length !== 0 && names[i].name.first.toLowerCase() + ' ' + names[i].name.last.toLowerCase() == searchInput.value.toLowerCase()) {
+         
+         studentList.innerHTML = ''
+         li.innerHTML = `
+         <li class="student-item cf" id="${names[i].name.first} ${names[i].name.last}">
+            <div class="student-details">
+               <img class="avatar" src=${names[i].picture.large} alt="Profile Picture">
+               <h3>${names[i].name.first} ${names[i].name.last}</h3>
+               <span class="email">${names[i].email}</span>
+            </div>
+            <div class="joined-details">
+               <span class="date">Joined ${names[i].registered.date}</span>
+            </div>
+         `
+         studentList.appendChild(li)
+      }; 
+   };
+};
+/*
+This function will refresh our page after a student search
+*/
+function refreshPage(searchInput, data) {
+   const currentPage = document.querySelector('.active');
+
+   if (searchInput.value.length == 0) {
+      showPage(data, currentPage.textContent)
+   };
+};
+/*
+This will be variables that we will use in our eventListeners
+*/
+const submit = document.querySelector('#submit')
+const search = document.querySelector('#search')
+/*
+This eventListener will receive the instruction of our search button
+*/
+submit.addEventListener('click', (event) => {
+   event.preventDefault();
+   
+   searchFunction(search, data)
+});
+/*
+This eventListener will refresh our page when we erase the search student
+*/
+search.addEventListener('keyup', (e) => {
+   e.preventDefault();
+
+   refreshPage(search, data)
+});
+
+
+
+
 
 
 
