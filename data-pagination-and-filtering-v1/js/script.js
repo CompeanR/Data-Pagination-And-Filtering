@@ -88,7 +88,6 @@ This function will search and match student
 */
 function searchFunction(targetValue, names) {
    const currentArray = [];
-   const button = document.querySelector('.active');
    const search = document.querySelector('#search');
 
    for (let i = 0; i < names.length; i++) {
@@ -108,7 +107,7 @@ function searchFunction(targetValue, names) {
 
       if (e.target.value.length == 0) {
          addPagination(data);
-         showPage(data, button.textContent);
+         showPage(data, 1);
       };
    });
 };
