@@ -88,28 +88,17 @@ This function will search and match student
 */
 function searchFunction(targetValue, names) {
    const currentArray = [];
-   const search = document.querySelector('#search');
 
    for (let i = 0; i < names.length; i++) {
       let completeName = names[i].name.first.toLowerCase() + ' ' + names[i].name.last.toLowerCase();
       
-      if (targetValue.length !== 0 && completeName.includes(targetValue)) {
+      if (completeName.includes(targetValue)) {
          currentArray.push(names[i]);
       };
-
    };
 
    showPage(currentArray, 1);
    addPagination(currentArray);
-
-   search.addEventListener('keyup', (e) => {
-      e.preventDefault();
-
-      if (e.target.value.length == 0) {
-         addPagination(data);
-         showPage(data, 1);
-      };
-   });
 };
 /*
 This will be variables that we will use in our eventListeners
