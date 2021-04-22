@@ -53,7 +53,7 @@ function addPagination(list) {
       <button type="button">${i}</button>
       `;
       linkList.insertAdjacentElement("beforeend", li);
-      document.querySelector('button').className = 'active'; 
+      document.querySelector('.link-list button').className = 'active'; 
    };
 
    linkList.addEventListener('click', (e) => {
@@ -88,6 +88,8 @@ This function will search and match student
 */
 function searchFunction(targetValue, names) {
    const currentArray = [];
+   const button = document.querySelector('.active');
+   const search = document.querySelector('#search');
 
    for (let i = 0; i < names.length; i++) {
       let completeName = names[i].name.first.toLowerCase() + ' ' + names[i].name.last.toLowerCase();
@@ -99,17 +101,16 @@ function searchFunction(targetValue, names) {
    };
 
    showPage(currentArray, 1);
-};
-/*
-This function will refresh our page after a student search
-*/
-function refreshPage(searchInput, data) {
-   const currentPage = document.querySelector('.active');
+   addPagination(currentArray);
 
-   if (searchInput.value.length == 0) {
-      showPage(data, currentPage.textContent);
-   };
-   
+   search.addEventListener('keyup', (e) => {
+      e.preventDefault();
+
+      if (e.target.value.length == 0) {
+         addPagination(data);
+         showPage(data, button.textContent);
+      };
+   });
 };
 /*
 This will be variables that we will use in our eventListeners
@@ -123,7 +124,7 @@ submit.addEventListener('click', (event) => {
    event.preventDefault();
    const character = e.target.value;
    
-   searchFunction(search, data);
+   searchFunction(character, data);
 });
 /*
 This eventListener will refresh our page when we erase the search student
@@ -133,7 +134,6 @@ search.addEventListener('keyup', (e) => {
    const character = e.target.value;
 
    searchFunction(character, data);
-   refreshPage(search, data);
 });
 
 
